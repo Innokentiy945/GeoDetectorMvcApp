@@ -13,9 +13,21 @@ namespace GeoDetectorMvcApp.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> GeoIndex()
+        public async Task<IActionResult> GeoIndex(string searchString)
         {
-            return View(await db.Geo.ToListAsync());
+            var geoObj = from x in db.Geo select x;
+
+            if (db.Geo == null)
+            {
+                return Problem("Entity set Geo is null.");
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                geoObj = geoObj.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(await geoObj.ToListAsync());
         }
 
         public IActionResult Create()
