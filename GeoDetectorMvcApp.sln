@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoDetectorMvcApp", "GeoDetectorMvcApp.csproj", "{B2484166-5D5E-47FA-8483-0188761E8A90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDetectorMvcApp", "GeoDetectorMvcApp.csproj", "{B2484166-5D5E-47FA-8483-0188761E8A90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDetectorWebApi", "..\GeoDetectorWebApi\GeoDetectorWebApi.csproj", "{6235CCBD-975C-442E-BA29-6BE6C20F8FB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMapWebApi", "..\GoogleMapWebApi\GoogleMapWebApi.csproj", "{B8A36515-FE94-4FDD-B3A9-259CFA8256D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{B2484166-5D5E-47FA-8483-0188761E8A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2484166-5D5E-47FA-8483-0188761E8A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2484166-5D5E-47FA-8483-0188761E8A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6235CCBD-975C-442E-BA29-6BE6C20F8FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6235CCBD-975C-442E-BA29-6BE6C20F8FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6235CCBD-975C-442E-BA29-6BE6C20F8FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6235CCBD-975C-442E-BA29-6BE6C20F8FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8A36515-FE94-4FDD-B3A9-259CFA8256D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A36515-FE94-4FDD-B3A9-259CFA8256D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A36515-FE94-4FDD-B3A9-259CFA8256D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A36515-FE94-4FDD-B3A9-259CFA8256D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

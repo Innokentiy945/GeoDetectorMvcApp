@@ -13,6 +13,7 @@ namespace GeoDetectorMvcApp.Controllers
             db = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GeoIndex(string searchString)
         {
             var geoObj = from x in db.Geo select x;
