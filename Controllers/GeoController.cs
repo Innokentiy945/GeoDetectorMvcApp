@@ -13,6 +13,7 @@ namespace GeoDetectorMvcApp.Controllers
             db = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GeoIndex(string searchString)
         {
             var geoObj = from x in db.Geo select x;
@@ -22,7 +23,7 @@ namespace GeoDetectorMvcApp.Controllers
                 return Problem("Entity set Geo is null.");
             }
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 geoObj = geoObj.Where(s => s.Name.Contains(searchString));
             }
