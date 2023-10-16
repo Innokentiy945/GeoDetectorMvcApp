@@ -1,12 +1,13 @@
-using GeoDetectorMvcApp.CustomMiddleWares;
 using GeoDetectorMvcApp.DbContext;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
 
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<GeoContext>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<WeatherContext>(options => options.UseSqlServer(connection));
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 
@@ -25,7 +26,7 @@ app.UseStaticFiles();
 
 app.UseSession();
 
-app.UseMiddleware<CustomMiddlewareAuth>();;
+//app.UseMiddleware<CustomMiddlewareAuth>();;
 
 app.MapControllerRoute(
     name: "default",

@@ -23,7 +23,7 @@ namespace GeoDetectorMvcApp.Controllers
                 return Problem("Entity set Geo is null.");
             }
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 geoObj = geoObj.Where(s => s.Name.Contains(searchString));
             }

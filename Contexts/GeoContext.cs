@@ -5,7 +5,7 @@ namespace GeoDetectorMvcApp.DbContext
 {
     public class GeoContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public GeoContext(DbContextOptions options) : base(options) { }
+        public GeoContext(DbContextOptions<GeoContext> options) : base(options) { }
         public DbSet<GeoModel> Geo { get; set; }
     }
 }

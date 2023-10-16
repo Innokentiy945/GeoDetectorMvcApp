@@ -1,0 +1,28 @@
+﻿@model GeoDetectorMvcApp.Models.WeatherModel
+
+<h2>Add weather data</h2>
+<form asp-action="WeatherSet" asp-controller="Weather">
+    <p>
+        <label asp-for="CloudType">Cloud Type</label><br />
+        <input type="text" asp-for="CloudType" />
+    </p>
+    <p>
+        <label asp-for="RainPersantage">Rain Persantage</label><br />
+        <input type="text" asp-for="RainPersantage" />
+    </p>
+    <p>
+        <label asp-for="SunPersantage">Sun Persantage</label><br />
+        <input type="text" asp-for="SunPersantage" />
+    </p>
+    <p>
+        <label asp-for="Temperature">Temperature</label><br />
+        <input type="text" asp-for="Temperature" />
+    </p>
+    <p>
+        <label asp-for="GeoLocation">Geo Location</label><br />
+        <input type="text" asp-for="GeoLocation" />
+    </p>
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+</form>
