@@ -35,6 +35,7 @@ public class GeoController : Controller
         catch(Exception e)
         {
             Console.WriteLine(e.Message);
+            throw;
         }
 
         return View(await geoObj.ToListAsync());
@@ -56,6 +57,7 @@ public class GeoController : Controller
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+            throw;
         }
         return RedirectToAction("GeoIndex");
     }
@@ -71,6 +73,7 @@ public class GeoController : Controller
         catch(Exception e)
         {
             Console.WriteLine(e.Message);
+            throw;
         }
         return RedirectToAction("GeoIndex");
     }
