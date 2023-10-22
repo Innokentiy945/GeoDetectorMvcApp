@@ -1,5 +1,7 @@
-using GeoDetectorMvcApp.DbContext;
+using GeoDetectorMvcApp.Context;
+using GeoDetectorWebApi.Context;
 using Microsoft.EntityFrameworkCore;
+using WeatherServiceWebApi.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -8,25 +10,18 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 
 builder.Services.AddDbContext<GeoContext>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<WeatherContext>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<CombinedContext>(options => options.UseSqlServer(connection));
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseSession();
 
-//app.UseMiddleware<CustomMiddlewareAuth>();;
+//app.UseMiddleware<CustomMiddlewareAuth>();
 
 app.MapControllerRoute(
     name: "default",
