@@ -1,69 +1,105 @@
-﻿using GeoDetectorMvcApp.DbContext;
+﻿using GeoDetectorMvcApp.Context;
 using GeoDetectorMvcApp.Models;
+using GeoDetectorWebApi.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using GeoDetectorWebApi.Model;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using WeatherServiceWebApi.Context;
+using WeatherServiceWebApi.Model;
 
-namespace GeoDetectorMvcApp.Controllers
+namespace GeoDetectorMvcApp.Controllers;
+
+public class GeoController : Controller
 {
-    public class GeoController : Controller
+    private GeoContext _geoContext;
+    private CombinedContext _combContext;
+    public GeoController(GeoContext contextGeo, CombinedContext _combinedContext)
     {
-        GeoContext db;
-        public GeoController(GeoContext context)
+        _geoContext = contextGeo;
+        _combContext = _combinedContext;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GeoIndex(string searchString)
+    {
+        var geoObj = from x in _geoContext.Geo select x;
+
+        try
         {
-            db = context;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GeoIndex(string searchString)
-        {
-            var geoObj = from x in db.Geo select x;
-
-            if (db.Geo == null)
-            {
-                return Problem("Entity set Geo is null.");
-            }
-
             if (!string.IsNullOrEmpty(searchString))
             {
                 geoObj = geoObj.Where(s => s.Name.Contains(searchString));
             }
-
-            return View(await geoObj.ToListAsync());
         }
-
-        public IActionResult Create()
+        catch(Exception e)
         {
-            return View();
+            Console.WriteLine(e.Message);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(GeoModel model)
+        return View(await geoObj.ToListAsync());
+    }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(GeoModel model)
+    {
+        try
         {
-            db.Geo.Add(model);
-            await db.SaveChangesAsync();
-            return RedirectToAction("GeoIndex");
+            _geoContext.Geo.Add(model);
+            await _geoContext.SaveChangesAsync();
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        return RedirectToAction("GeoIndex");
+    }
 
-        public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(string id)
+    {
+        try
         {
             GeoModel geo = new GeoModel { ItemId = id };
-            db.Entry(geo).State = EntityState.Deleted;
-            await db.SaveChangesAsync();
-            return RedirectToAction("GeoIndex");
+            _geoContext.Entry(geo).State = EntityState.Deleted;
+            await _geoContext.SaveChangesAsync();
         }
-
-        public async Task<IActionResult> Edit(string id)
+        catch(Exception e)
         {
-            GeoModel geo = await db.Geo.FirstOrDefaultAsync(p => p.ItemId == id);
-            return View(geo);
+            Console.WriteLine(e.Message);
         }
+        return RedirectToAction("GeoIndex");
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(GeoModel geo)
+    public async Task<IActionResult> Edit(string id)
+    {
+        GeoModel? geo = await _geoContext.Geo.FirstOrDefaultAsync(p => p.ItemId == id);
+        return View(geo);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(GeoModel geo)
+    {
+        try
         {
-            db.Geo.Update(geo);
-            await db.SaveChangesAsync();
-            return RedirectToAction("GeoIndex");
+            _geoContext.Geo.Update(geo);
+            await _geoContext.SaveChangesAsync();
         }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        return RedirectToAction("GeoIndex");
+    }
+        
+    [HttpGet]
+    public async Task<ActionResult> Combined()
+    {
+        var getAllCombined = _combContext.Combined.FromSqlRaw("SELECT \n    GeoTable.Longitude, \n    GeoTable.Latitude, \n    WeatherTable.CloudType, \n    WeatherTable.RainPersantage, \n    WeatherTable.SunPersantage, \n    WeatherTable.Temperature, \n    WeatherTable.GeoLocation \nFROM GeoTable\nCROSS JOIN WeatherTable").AsEnumerable();
+        return View(getAllCombined);
     }
 }
