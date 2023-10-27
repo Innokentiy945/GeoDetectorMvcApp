@@ -5,9 +5,7 @@
 <p><a asp-action="WeatherSet">Add Weather Data</a></p>
 <table class="table">
     <tr>
-        <th>CloudType</th>
-        <th>RainPersantage</th>
-        <th>SunPersantage</th>
+        <th>Id</th>
         <th>Temperature</th>
         <th>GeoLocation</th>
     </tr>
@@ -16,9 +14,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.CloudType</td>
-            <td>@item.RainPersantage</td>
-            <td>@item.SunPersantage</td>
+            <td>@item.Id</td>
             <td>@item.Temperature</td>
             <td>@item.GeoLocation</td>
         </tr>

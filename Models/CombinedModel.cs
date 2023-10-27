@@ -3,16 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GeoDetectorMvcApp.Models;
 
-[Table("CombinedDataTable")]
+[Table("CombinedTable")]
 public class CombinedModel
 {
     
-    [Key, ForeignKey("GeoLocation")]
-    public string GeoLocation { get; set; }
+    [Key, ForeignKey("Id")]
+    public string Id { get; set; }
     public string Longitude { get; set; }
     public string Latitude { get; set; }
-    public string CloudType { get; set; }
-    public string SunPersantage { get; set; }
-    public string RainPersantage { get; set; }
+    public string Name { get; set; }
     public string Temperature { get; set; }
+    public string GeoLocation { get; set; }
 }
