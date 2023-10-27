@@ -15,29 +15,11 @@ public class GeoController : Controller
     {
         _mainContext = mainContext;
     }
-
-    public IActionResult GeoIndex()
-    {
-        return View();
-    }
     
     [HttpGet]
-    public async Task<IActionResult> GeoIndex(string searchString)
+    public async Task<IActionResult> GeoIndex()
     {
-        if (_mainContext.Geo == null)
-        {
-            return Problem("Geo data is null.");
-        }
-
-        var results = from m in _mainContext.Geo
-            select m;
-
-        if (!String.IsNullOrEmpty(searchString))
-        {
-            results = results.Where(s => s.Name!.Contains(searchString));
-        }
-
-        return View(await results.ToListAsync());
+        return View(await _mainContext.Geo.ToListAsync());
     }
 
     public IActionResult Create()
