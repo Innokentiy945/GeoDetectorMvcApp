@@ -1,24 +1,23 @@
 ﻿
+using GeoDetectorMvcApp.Context;
 using Microsoft.AspNetCore.Mvc;
-using WeatherServiceWebApi.Context;
 using WeatherModel = WeatherServiceWebApi.Model.WeatherModel;
 
 namespace GeoDetectorMvcApp.Controllers;
 
 public class WeatherController : Controller
 {
-    WeatherContext _weatherContext;
+    private MainContext _mainContext;
 
-    public WeatherController(WeatherContext context)
+    public WeatherController(MainContext mainContext)
     {
-        _weatherContext = context;
+        _mainContext = mainContext;
     }
 
     [HttpGet]
-    [Route("GetWeatherData")]
     public async Task<IActionResult> WeatherIndex()
     {
-        return View(_weatherContext.Weather);
+        return View(_mainContext.Weather);
     }
 
     public IActionResult WeatherSet()
@@ -27,11 +26,10 @@ public class WeatherController : Controller
     }
 
     [HttpPost]
-    [Route("SetWateherData")]
     public async Task<IActionResult> WeatherSet(WeatherModel model)
     {
-        _weatherContext.Weather.Add(model);
-        await _weatherContext.SaveChangesAsync();
+        _mainContext.Weather.Add(model);
+        await _mainContext.SaveChangesAsync();
         return RedirectToAction("WeatherIndex");
     }
 

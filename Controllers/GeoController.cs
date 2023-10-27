@@ -1,44 +1,43 @@
 ﻿using GeoDetectorMvcApp.Context;
 using GeoDetectorMvcApp.Models;
-using GeoDetectorWebApi.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GeoDetectorWebApi.Model;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
-using WeatherServiceWebApi.Context;
-using WeatherServiceWebApi.Model;
+using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace GeoDetectorMvcApp.Controllers;
 
 public class GeoController : Controller
 {
-    private GeoContext _geoContext;
-    private CombinedContext _combContext;
-    public GeoController(GeoContext contextGeo, CombinedContext _combinedContext)
+    private MainContext _mainContext;
+
+    public GeoController(MainContext mainContext)
     {
-        _geoContext = contextGeo;
-        _combContext = _combinedContext;
+        _mainContext = mainContext;
     }
 
+    public IActionResult GeoIndex()
+    {
+        return View();
+    }
+    
     [HttpGet]
     public async Task<IActionResult> GeoIndex(string searchString)
     {
-        var geoObj = from x in _geoContext.Geo select x;
-
-        try
+        if (_mainContext.Geo == null)
         {
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                geoObj = geoObj.Where(s => s.Name.Contains(searchString));
-            }
-        }
-        catch(Exception e)
-        {
-            Console.WriteLine(e.Message);
-            throw;
+            return Problem("Geo data is null.");
         }
 
-        return View(await geoObj.ToListAsync());
+        var results = from m in _mainContext.Geo
+            select m;
+
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            results = results.Where(s => s.Name!.Contains(searchString));
+        }
+
+        return View(await results.ToListAsync());
     }
 
     public IActionResult Create()
@@ -51,8 +50,8 @@ public class GeoController : Controller
     {
         try
         {
-            _geoContext.Geo.Add(model);
-            await _geoContext.SaveChangesAsync();
+            _mainContext.Geo.Add(model);
+            await _mainContext.SaveChangesAsync();
         }
         catch (Exception e)
         {
@@ -66,9 +65,9 @@ public class GeoController : Controller
     {
         try
         {
-            GeoModel geo = new GeoModel { ItemId = id };
-            _geoContext.Entry(geo).State = EntityState.Deleted;
-            await _geoContext.SaveChangesAsync();
+            GeoModel geo = new GeoModel { Id = id };
+            _mainContext.Entry(geo).State = EntityState.Deleted;
+            await _mainContext.SaveChangesAsync();
         }
         catch(Exception e)
         {
@@ -80,7 +79,7 @@ public class GeoController : Controller
 
     public async Task<IActionResult> Edit(string id)
     {
-        GeoModel? geo = await _geoContext.Geo.FirstOrDefaultAsync(p => p.ItemId == id);
+        GeoModel? geo = await EntityFrameworkQueryableExtensions.FirstOrDefaultAsync(_mainContext.Geo, p => p.Id == id);
         return View(geo);
     }
 
@@ -89,8 +88,8 @@ public class GeoController : Controller
     {
         try
         {
-            _geoContext.Geo.Update(geo);
-            await _geoContext.SaveChangesAsync();
+            _mainContext.Geo.Update(geo);
+            await _mainContext.SaveChangesAsync();
         }
         catch(Exception e)
         {
@@ -102,7 +101,20 @@ public class GeoController : Controller
     [HttpGet]
     public async Task<ActionResult> Combined()
     {
-        var getAllCombined = _combContext.Combined.FromSqlRaw("SELECT \n    GeoTable.Longitude, \n    GeoTable.Latitude, \n    WeatherTable.CloudType, \n    WeatherTable.RainPersantage, \n    WeatherTable.SunPersantage, \n    WeatherTable.Temperature, \n    WeatherTable.GeoLocation \nFROM GeoTable\nCROSS JOIN WeatherTable").AsEnumerable();
-        return View(getAllCombined);
+        Guid id = new Guid();
+        
+        var result = await (from g in _mainContext.Geo
+            join w in _mainContext.Weather on g.Id equals w.Id
+            select new CombinedModel
+            {
+                Id = id.ToString(),
+                Longitude = g.Longitude,
+                Latitude = g.Latitude,
+                Name = g.Name,
+                Temperature = w.Temperature,
+                GeoLocation = w.GeoLocation
+            }).ToListAsync();
+
+        return View(result);
     }
 }

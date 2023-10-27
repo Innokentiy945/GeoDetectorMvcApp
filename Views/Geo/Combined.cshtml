@@ -4,9 +4,7 @@
         <td>GeoLocation</td>
         <td>Longitude</td>
         <td>Latitude</td>
-        <td>CloudType</td>
-        <td>SunPersantage</td>
-        <td>RainPersantage</td>
+        <td>Name</td>
         <td>Temperature</td>
     </tr>
     @foreach (var item in Model)
@@ -15,9 +13,7 @@
             <td>@item.GeoLocation</td>
             <td>@item.Longitude</td>
             <td>@item.Latitude</td>
-            <td>@item.CloudType</td>
-            <td>@item.SunPersantage</td>
-            <td>@item.RainPersantage</td>
+            <td>@item.Name</td>
             <td>@item.Temperature</td>
         </tr>
     }
