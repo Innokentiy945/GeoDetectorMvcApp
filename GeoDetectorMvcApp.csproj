@@ -26,7 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GeoDetectorWebApi\GeoDetectorWebApi.csproj" />
+    <ProjectReference Include="..\CombinedServiceWebApi\CombinedServiceWebApi.csproj" />
+    <ProjectReference Include="..\GeoDetectorServiceWebApi\GeoDetectorServiceWebApi.csproj" />
   </ItemGroup>
 
 </Project>

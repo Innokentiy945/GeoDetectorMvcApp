@@ -1,5 +1,5 @@
-﻿using GeoDetectorMvcApp.Models;
-using GeoDetectorWebApi.Model;
+﻿using CombinedServiceWebApi.Model;
+using GeoDetectorServiceWebApi.Model;
 using Microsoft.EntityFrameworkCore;
 using WeatherServiceWebApi.Model;
 
@@ -12,9 +12,4 @@ public class MainContext : DbContext
     public DbSet<CombinedModel> Combined { get; set; } = null!;
     
     public MainContext(DbContextOptions<MainContext> options) : base(options) { }
- 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=GeoDB;Integrated Security=True;TrustServerCertificate=true;MultipleActiveResultSets=True");
-    }
 }

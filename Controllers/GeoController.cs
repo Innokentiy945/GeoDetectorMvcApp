@@ -1,8 +1,8 @@
-﻿using GeoDetectorMvcApp.Context;
-using GeoDetectorMvcApp.Models;
+﻿using CombinedServiceWebApi.Model;
+using GeoDetectorMvcApp.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GeoDetectorWebApi.Model;
+using GeoDetectorServiceWebApi.Model;
 using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace GeoDetectorMvcApp.Controllers;
@@ -96,7 +96,7 @@ public class GeoController : Controller
                 Temperature = w.Temperature,
                 GeoLocation = w.GeoLocation
             }).ToListAsync();
-
+        
         return View(result);
     }
 }
