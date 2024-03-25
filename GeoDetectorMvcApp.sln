@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDetectorServiceWebApi", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherServiceWebApi", "..\GeoUserApi\WeatherServiceWebApi.csproj", "{E18283F8-BC6E-4142-A937-EC39205F37BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombinedServiceWebApi", "..\CombinedServiceWebApi\CombinedServiceWebApi.csproj", "{13E3AF57-6A7C-405E-B70D-AB20992DFC0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CombinedServiceWebApi", "..\CombinedServiceWebApi\CombinedServiceWebApi.csproj", "{13E3AF57-6A7C-405E-B70D-AB20992DFC0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsersWebApi", "..\UsersWebApi\UsersWebApi.csproj", "{0425DA11-852B-4340-8D44-654C8714B59E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{13E3AF57-6A7C-405E-B70D-AB20992DFC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13E3AF57-6A7C-405E-B70D-AB20992DFC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13E3AF57-6A7C-405E-B70D-AB20992DFC0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0425DA11-852B-4340-8D44-654C8714B59E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0425DA11-852B-4340-8D44-654C8714B59E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0425DA11-852B-4340-8D44-654C8714B59E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0425DA11-852B-4340-8D44-654C8714B59E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
